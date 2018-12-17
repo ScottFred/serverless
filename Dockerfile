@@ -30,7 +30,7 @@ RUN if getent passwd | grep node; then userdel -f node; fi &&\
    useradd -l -u ${USER_ID} -g node node &&\
    install -d -m 0755 -o node -g node /home/node &&\
    chown -R node /usr/local/lib /usr/local/include /usr/local/share /usr/local/bin &&\
-   (cd /tmp; su node -c "npm install -g @angular/cli@$NG_CLI_VERSION; npm install -g serverless; npm install -g yarn; chmod +x /usr/local/bin/yarn; npm install -g serverless-s3-sync; npm cache clean --force") &&\
+   (cd /tmp; su node -c "npm install -g @angular/cli@$NG_CLI_VERSION; npm install -g serverless; npm install -g yarn; chmod +x /usr/local/bin/yarn; npm install -g serverless-s3-sync; npm install -g --save aws-sdk body-parser; npm cache clean --force") &&\
    git config --global user.email ${GIT_USER_EMAIL} &&\
    git config --global user.name ${GIT_USER_NAME}
    
