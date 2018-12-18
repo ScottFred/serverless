@@ -6,7 +6,7 @@
 # development environment and some developers may just want to get to it
 
 # select latest version of Node.js stretch version
-# ToDo: Is stretch the best version to use?
+# ToDo: Is "stretch" the best version to use?
 FROM node:stretch
 
 # define default values (can be overridden on command line)
@@ -29,8 +29,9 @@ RUN if getent passwd | grep node; then userdel -f node; fi &&\
    groupadd -g ${GROUP_ID} node &&\
    useradd -l -u ${USER_ID} -g node node &&\
    install -d -m 0755 -o node -g node /home/node &&\
-   chown -R node /usr/local/lib /usr/local/include /usr/local/share /usr/local/bin &&\
-   (cd /tmp; su node -c "npm install -g @angular/cli@$NG_CLI_VERSION; npm install -g serverless; npm install -g yarn; chmod +x /usr/local/bin/yarn; npm install -g serverless-s3-sync; npm install -g --save aws-sdk body-parser; npm cache clean --force") &&\
+   mkdir -p $APP_DIR &&\
+   chown -R node /usr/local/lib /usr/local/include /usr/local/share /usr/local/bin $APP_DIR &&\
+   (cd /app; su node -c "npm install serverless-http; npm install aws-sdk; npm install -g serverless; npm install -g yarn; chmod +x /usr/local/bin/yarn; npm install serverless-s3-sync; npm install body-parser; npm cache clean --force") &&\
    git config --global user.email ${GIT_USER_EMAIL} &&\
    git config --global user.name ${GIT_USER_NAME}
    
